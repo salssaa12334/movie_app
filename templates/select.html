@@ -1,0 +1,43 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}Select Movie{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="heading">Select Movie</h1>
+    <div class="row">
+      {% if data["movies"] != [] %}
+      {% for m in data["movies"] %}
+      <div class="col-sm-auto">
+        <div class="card">
+          <div class="front" style="background-image: url('{{data['path_img']}}{{ m.poster_path }}');">
+          </div>
+          <div class="back">
+          <div>
+            <div class="title">
+              {{ m.title }}
+              <span class="release_date">( {{ m.release_date[:4] }} )</span>
+            </div>
+            
+            <div class="rating">
+              <label>{{ m.vote_average }}</label>
+              <i class="fas fa-star star"></i>
+            </div>
+            
+            <p class="overview">{{ m.overview }}</p>
+            <a href="{{ url_for('select', id = m.id) }}" class="btn btn-primary">Select</a>
+          </div>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+</div>
+{% endblock %}
